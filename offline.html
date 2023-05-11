@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FIFA Players</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="manifest.json" rel="manifest">
+
+    <!-- iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FIFA Players">
+    <link rel="apple-touch-icon" href="icons/152.png">
+
+    <meta name="description" content="FIFA Players">
+    <meta name="theme-color" content="#141f65" />
+
+  </head>
+  <body>
+    
+    <header class="container-fluid fixed-top">
+        
+      <div class="header_componentes">
+          <img src="imgs/logo.png" id="btLogo" class="logo">
+          <a class="btn btSearch" data-bs-toggle="collapse" href="#collapseSearch" role="button" aria-expanded="false" aria-controls="collapseSearch" id="btPesquisa">Pesquisar</a>
+      </div>
+
+      <div class="collapse form_pesquisa" id="collapseSearch">
+          <div class="mb-3">
+            <select class="form-select" name="select_league" id="select_league" aria-label="Liga">
+              <option value="" selected>Escolha a liga do jogadore:</option>
+              <div class="row" id="container_league">
+
+              </div>
+            </select>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" name="select_club" id="select_club" aria-label="Time">
+              <option value="" selected>Escolha a liga do jogador:</option>
+              
+            </select>
+          </div>
+          
+          <div class="input-group mb-3">
+            <input type="text" name="nome" id="name" class="form-control" placeholder="Digite o nome do jogador" aria-label="Digite o nome do jogador" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" id="buscar_name">Buscar</button>
+          </div>
+      </div>
+
+    </header>
+
+    <main class="container">
+        
+      <section id="consulta">
+          <h2 id="titulo_principal">Lista de jogadores</h2>
+
+          <div class="row" id="container_jogadores">
+            
+
+          </div>
+
+          <div class="row" id="carregar_mais" style="display: none;">
+            
+            <div class="col-12" style="margin-top:20px;"><div class="d-grid gap-2"><a href="javascript:btCarregar();" class="btn btn-warning">Carregar Mais</a></div></div>            
+
+          </div>          
+
+        </section>
+
+    </main>
+
+    <footer class="container-fluid fixed-bottom">
+
+        <div class="btn-group" role="group">
+            <button type="button" id="btInstalar" hidden class="btn btn-success">Instalar</button>
+            <a href="https://futdb.app/api/doc" target="_blank" class="btn btn-success">Site da FIFA</a>            
+          </div>
+
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+
+  </body>
+</html>

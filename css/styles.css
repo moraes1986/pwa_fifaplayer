@@ -1,0 +1,131 @@
+@font-face {
+    font-family: Roboto-Medium;
+    src: url(../fonts/Roboto-Medium.ttf)
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(../fonts/Roboto-Regular.ttf)
+}
+
+@font-face {
+    font-family: Roboto-Bold;
+    src: url(../fonts/Roboto-Bold.ttf)
+}
+
+body{
+    font-family: Roboto-Regular;
+}
+
+header{    
+    height: 80px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(248, 248, 250, 0.555) 0%, rgb(255, 255, 255) 100%);
+    -webkit-box-shadow: 0px 5px 21px 3px rgba(0,0,0,0.46); 
+    box-shadow: 0px 5px 21px 3px rgba(0,0,0,0.46);
+    border-bottom: 8px solid #1b297f;
+}
+
+.btSearch{
+    background-image: url('../imgs/search_icon.png');
+    background-repeat: no-repeat;
+    background-color: none !important;
+    background-size: 100%;
+    width: 48px;
+    height: 48px;
+    display: block;
+    position: absolute;
+    right: 20px;
+    bottom: -96px;
+    text-indent: -9999px;
+}
+.header_componentes{
+    z-index: 9999;
+    position: relative;
+}
+
+.form_pesquisa{
+    background: #141f65;
+    position: absolute;    
+    width: 100%;
+    left: 0px;
+    top: 80px;
+    padding: 20px;    
+    padding-top: 50px;
+    z-index: 1;
+}
+
+.logo{
+    width: 120px;
+    position: absolute;
+    top: 15px;
+}
+
+#gastos{
+    z-index: 999;
+}
+
+main{    
+    margin-top: 110px;
+    margin-bottom: 60px;
+}
+
+main h2{
+    color: #17469a;
+    font-size: 120%;
+    font-weight: bold;
+    font-family: Roboto-Bold;
+    border-bottom: 2px dashed #1b297f;
+    padding: 10px;
+    background: rgb(127,169,230);
+    background: linear-gradient(0deg, rgba(127,169,230,0.2805497198879552) 0%, rgba(9,75,124,0.15449929971988796) 100%);
+    border-radius: 5px;
+}
+
+.titulo2{
+    color: #141275;
+    font-size: 120%;
+    font-weight: bold;
+    font-family: Roboto-Bold;
+    border-bottom: 2px dashed #1b1d7f;
+    padding: 10px;
+    background: rgb(190, 207, 243);
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.card{
+    border: 1px solid #17469a;
+    padding-top: 60px;
+    margin-top: 80px;
+}
+
+.card h5{
+    text-align: center;
+    font-size: 140%;
+}
+
+.card h6{
+    font-weight: normal !important;
+}
+
+.card .card-jogador{
+    width: 128px;
+    height: 128px;
+    border-radius: 64px;
+    border: 3px solid #17469a;
+    position: absolute;
+    left: 50%;
+    top: -64px;
+    margin-left: -64px;    
+}
+
+footer{
+    background: rgb(2, 20, 102);
+    background: linear-gradient(0deg, rgb(2, 42, 102) 0%, rgb(9, 30, 124) 100%);
+    -webkit-box-shadow: 0px -5px 21px 3px rgba(0,0,0,0.46); 
+    box-shadow: 0px -5px 21px 3px rgba(0,0,0,0.46);
+    text-align: center;
+    padding: 5px;
+}
