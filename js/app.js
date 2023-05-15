@@ -155,7 +155,7 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
     }
 
     for (let i = cursor; i < total - test; i++) {
-        //zsetTimeout(i,20000);
+        
         if (busca == "name") {
 
             console.log(data_json);
@@ -166,7 +166,7 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
                 find = true;
                 load_imagem = false;
                 data_json_replace.push(data_json.items[i]);
-                console.log(data_json_replace);
+                console.log(data_json_replace, "data_json_replace");
                 //console.log(data_json.items[i].name);
                 //var player_img = getFutebolImg(endpoint_principal+"players/" + data_json.items[i].id +"/image", true);
 
@@ -188,7 +188,6 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
 
         } else {
 
-            //console.log(array_img[i], i);
             let league_json = getFutebolData(endpoint_principal + "leagues/" + data_json.items[i].league, false);
             
             let club_json = getFutebolData(endpoint_principal + "clubs/" + data_json.items[i].club, false);
@@ -221,7 +220,7 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
 
     if(load_imagem == false){
         let array_img = [];
-        if(data_json_replace != null && data_json.length > 0){
+        if(data_json_replace.length > 0){
             console.log("recebeu replace image", data_json_replace);
             array_img = data_json_replace;
         }else{
