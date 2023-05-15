@@ -4,6 +4,7 @@ Variáveis Globais
 let token = "33783736-f54e-40a2-b1c3-26e45634ac31"
 let endpoint_principal = "https://futdb.app/api/";
 let data_json = null;
+let load_imagem = false;
 let cursor = 0;
 let limite_paginacao = 20;
 let busca = "";
@@ -22,11 +23,11 @@ Template Engine
 
 */
 
-let card_jogador = function (items, league, club, img) {
+let card_jogador = function (items, league, club, id) {
     return `
             <div class="col-12 col-md-6 col-lg-4">
             <div class="card" id="card_${items.id}">                
-                <img id="playerImg" src="${img}" class="card-jogador"></img>
+                <img id="${id}" src="" class="card-jogador"></img>
                 <div class="card-body">
                 <h5 class="card-title">${items.name}</h5>
                 <h6><strong>Liga: </strong>${league.name}</h6>
@@ -55,17 +56,17 @@ document.getElementById("btLogo").addEventListener("click", function () {
 });
 
 
-function getFutebolData(endpoint, assyn_request) {
+function getFutebolData(endpoint, async_request) {
     var data_json;
     let ajax = new XMLHttpRequest();
-    ajax.open("GET", endpoint, assyn_request);
+    ajax.open("GET", endpoint, async_request);
     ajax.setRequestHeader("X-AUTH-TOKEN", token);
 
 
-    //console.log("Request assync: " + assyn_request)
+    //console.log("Request assync: " + async_request)
     ajax.send();
 
-    if (assyn_request == true) {
+    if (async_request == true) {
         ajax.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
@@ -84,10 +85,10 @@ function getFutebolData(endpoint, assyn_request) {
 
 }
 
-function getFutebolImg(endpoint, assyn_request) {
+async function getFutebolImg(endpoint, async_request, id) {
 
     let ajax = new XMLHttpRequest();
-    ajax.open("GET", endpoint, assyn_request);
+    ajax.open("GET", endpoint, async_request);
     ajax.setRequestHeader("X-AUTH-TOKEN", token);
     ajax.setRequestHeader("accept", "image/png");
     ajax.timeout = 8000;
@@ -96,8 +97,9 @@ function getFutebolImg(endpoint, assyn_request) {
 
     let blob;
     let image = new Image();
-
+    let tag_img = document.getElementById(id);
     
+    setTimeout(() => {
         ajax.send();
         ajax.onreadystatechange = function () {
 
@@ -105,13 +107,12 @@ function getFutebolImg(endpoint, assyn_request) {
             if (this.readyState == 4 && this.status == 200) {
                 blob = new Blob([ajax.response], { type: "image/png" });
                 image.src = URL.createObjectURL(blob);
+                tag_img.src = image.src;
                 console.log(image.src);
             }
         };
-        return image;
-
-
-
+    }, 800);
+        
     
 }
 
@@ -122,19 +123,9 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
     var data_json = getFutebolData(endpoint, false);
 
     //* Preload images for fast loading *//
-    let array_img = [];
+    let data_json_replace = [];
     var test = 0;
 
-    for (let i = 0; i < data_json.items.length - test; i++) {
-        let res = getFutebolImg(endpoint_principal + "players/" + data_json.items[i].id + "/image",true);
-        let id = data_json.items[i].id;
-        
-        setTimeout(() => {
-            
-        }, 3000); 
-        array_img.push({res,id});
-
-    }
     let html_container;
 
 
@@ -173,6 +164,9 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
 
             if (nome_base.includes(busca_valor) && data_json.items[i].club == time.options[time.selectedIndex].value) {
                 find = true;
+                load_imagem = false;
+                data_json_replace.push(data_json.items[i]);
+                console.log(data_json_replace);
                 //console.log(data_json.items[i].name);
                 //var player_img = getFutebolImg(endpoint_principal+"players/" + data_json.items[i].id +"/image", true);
 
@@ -180,7 +174,7 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
 
                 let club_json = getFutebolData(endpoint_principal + "clubs/" + data_json.items[i].club, false);
 
-                html_container += card_jogador(data_json.items[i], league_json.league, club_json.club, array_images[i].data.src);
+                html_container += card_jogador(data_json.items[i], league_json.league, club_json.club, data_json.items[i].id);
 
             }
 
@@ -194,12 +188,12 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
 
         } else {
 
-            console.log(array_img[i], i);
+            //console.log(array_img[i], i);
             let league_json = getFutebolData(endpoint_principal + "leagues/" + data_json.items[i].league, false);
             
             let club_json = getFutebolData(endpoint_principal + "clubs/" + data_json.items[i].club, false);
 
-            html_container += card_jogador(data_json.items[i], league_json.league, club_json.club, array_img[i].res.src);
+            html_container += card_jogador(data_json.items[i], league_json.league, club_json.club, data_json.items[i].id);
         }
 
 
@@ -223,7 +217,29 @@ function carregarDados(endpoint, titulo, container_titulo, container_resultado) 
     }
 
     container_resultado.innerHTML = html_container;
-    container_titulo.innerHTML = titulo
+    container_titulo.innerHTML = titulo;
+
+    if(load_imagem == false){
+        let array_img = [];
+        if(data_json_replace != null && data_json.length > 0){
+            console.log("recebeu replace image", data_json_replace);
+            array_img = data_json_replace;
+        }else{
+            array_img = data_json.items;
+        }
+        console.log(array_img);
+        for (let i = 0; i < array_img.length - test; i++) {
+            let id = array_img[i].id;
+            let res = getFutebolImg(endpoint_principal + "players/" + array_img[i].id + "/image",true, id);
+            res.then( (response) => {
+    
+                console.log(response);
+            });
+    
+        }
+        load_imagem = true;
+    }
+    
 }
 
 /*
